@@ -1,6 +1,6 @@
 # MLDevOps: Clean Code Principles
 
-- Project **Predict Customer Churn** of ML DevOps Engineer Nanodegree Udacity
+- Project **Predict Customer Churn**: ML DevOps Engineer Nanodegree Udacity
 
 ## Project Description
 This project puts to practice 5 key pillars towards MLOps or prod-ready machine learning projects. These pillars include;
