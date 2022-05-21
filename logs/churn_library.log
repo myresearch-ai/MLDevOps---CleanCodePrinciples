@@ -1,0 +1,18 @@
+root - INFO - Testing import_data: SUCCESS
+root - INFO - SUCCESS: Testing perform_eda was successful
+root - INFO - SUCCESS: File churn_distribution.png was successfully found
+root - INFO - SUCCESS: File customer_age_distribution.png was successfully found
+root - INFO - SUCCESS: File marital_status_distribution.png was successfully found
+root - INFO - SUCCESS: File total_transaction_distribution.png was successfully found
+root - INFO - SUCCESS: File corr.png was found
+root - INFO - SUCCESS: Testing encoder_helper(data_frame, category_lst=[]) succeeded.
+root - INFO - SUCCESS: Testing encoder_helper(data_frame,                 category_lst=category_lst, response=None) succeeded.
+root - INFO - SUCCESS: Testing encoder_helper(data_frame,                 category_lst=category_lst, response='Churn') succeeded.
+root - INFO - SUCCESS: Testing perform_feature_engineering -                 Churn feature was successfully found in the data.
+root - INFO - SUCCESS: Testing perform_feature_engineering -                 x_test & data sizes are consistent.
+root - INFO - SUCCESS: The pickled model file logistic_model.pkl was successfully found.
+root - INFO - SUCCESS: The pickled model file rfc_model.pkl was successfully found.
+root - INFO - SUCCESS: The pickled model file roc_curve_result.png was successfully found.
+root - INFO - SUCCESS: The pickled model file rf_results.png was successfully found.
+root - INFO - SUCCESS: The pickled model file logistic_results.png was successfully found.
+root - INFO - SUCCESS: The pickled model file feature_importances.png was successfully found.
