@@ -27,6 +27,7 @@ The project directory is structured as follows:
 
 
 ```
+├── requirements.txt     # Contains used libraries for reproducibility
 ├── Guide.ipynb          # Getting started and troubleshooting tips
 ├── churn_notebook.ipynb # Contains the code to be refactored
 ├── churn_library.py     # Defines the functions
@@ -41,18 +42,18 @@ The project directory is structured as follows:
 └── models 
 ```
 
-## Running Files
-To run the programs on the command line:
+## Running the Test and Logging Results
+There are two ways to test the script:
+
+- Directly executing the command (requires main() function): 
 
 ```
-$ python churn_library.py
+$ ipython churn_script_logging_and_tests.py
 ```
-
-For style checking & error spotting, run code as follows on the CLI:
+- Using pytest command:
 
 ```
-$ pylint churn_library.py
-$ pylint churn_script_logging_and_tests.py
+$ pytest churn_script_logging_and_tests.py
 ```
 
 NOTE: Make sure you have pylint installed.

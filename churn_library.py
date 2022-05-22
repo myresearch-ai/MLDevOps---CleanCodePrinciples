@@ -1,6 +1,10 @@
 """This modules demonstrates implementation of a simple end-to-end
 machine learning implementation using Python PEP8 best coding and
-practices"""
+practices
+
+Author: Ed Mwanza
+
+Date: 5/16/22"""
 
 
 # import libraries
@@ -19,7 +23,7 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import GridSearchCV
 
-from sklearn.metrics import classification_report
+from sklearn.metrics import plot_roc_curve, classification_report
 
 
 os.environ['QT_QPA_PLATFORM'] = 'offscreen'
@@ -51,28 +55,34 @@ def perform_eda(data: pd.DataFrame, figsize=(20, 10)) -> pd.DataFrame:
             data_out: pandas dataframe
     '''
     data_eda = data.copy(deep=True)
-    plt.figure(figsize=figsize)
+
     # Churn
+    plt.figure(figsize=figsize)
     data_eda['Churn'] = data_eda['Attrition_Flag'].apply(
         lambda val: 0 if val == "Existing Customer" else 1)
 
     # Churn Distribution
+    plt.figure(figsize=figsize)
     data_eda['Churn'].hist()
     plt.savefig(fname='./images/eda/churn_distribution.png')
 
     # Customer Age Distribution
+    plt.figure(figsize=figsize)
     data_eda['Customer_Age'].hist()
     plt.savefig(fname='./images/eda/customer_age_distribution.png')
 
     # Normalized Marital Status Distribution
+    plt.figure(figsize=figsize)
     data_eda.Marital_Status.value_counts('normalize').plot(kind='bar')
     plt.savefig(fname='./images/eda/marital_status_distribution.png')
 
     # Total Transaction Distribution
-    sns.histplot(data_eda['Total_Trans_Ct'], stat='density', kde=True)
+    plt.figure(figsize=figsize)
+    sns.histplot(data_eda, x='Total_Trans_Ct', stat='density', kde=True)
     plt.savefig(fname='./images/eda/total_transaction_distribution.png')
 
     # Correlation map
+    plt.figure(figsize=figsize)
     sns.heatmap(data_eda.corr(), annot=False, cmap='Dark2_r', linewidths=2)
     plt.savefig(fname='./images/eda/corr.png')
 
@@ -179,9 +189,11 @@ def perform_feature_engineering(data: pd.DataFrame,
     return (
         x_train, x_test, y_train, y_test)
 
+# Pylint penalty: too-many-args
+# Correction: put the dataframes in - List[pd.DataFrame] then index into list.
 
-def classification_report_image(y_train: pd.DataFrame,
-                                y_test: pd.DataFrame,
+
+def classification_report_image(y_train_test: List[pd.DataFrame],
                                 y_train_preds_lr: List[float],
                                 y_train_preds_rf: List[float],
                                 y_test_preds_lr: List[float],
@@ -199,6 +211,9 @@ def classification_report_image(y_train: pd.DataFrame,
     output:
         None
     '''
+    # Extract y_train & y_test from y_train_test
+    y_train = y_train_test[0]
+    y_test = y_train_test[1]
     # RandomForestClassifier
     plt.rc('figure', figsize=(6, 6))
     plt.text(0.01, 1.25,
@@ -316,10 +331,19 @@ def train_models(
 
     # Compute ROC curve
     plt.figure(figsize=(15, 8))
+    axis = plt.gca()
+    lrc_plot = plot_roc_curve(lrc, x_test, y_test, ax=axis, alpha=0.8)
+    rfc_disp = plot_roc_curve(cv_rfc.best_estimator_,
+                              x_test, y_test, ax=axis, alpha=0.8)
+    lrc_plot.plot(ax=axis, alpha=0.8)
+    rfc_disp.plot(ax=axis, alpha=0.8)
     plt.savefig(fname='./images/results/roc_curve_result.png')
 
+    # Create y_train_test list
+    y_train_test = [y_train, y_test]
+
     # Compute and results
-    classification_report_image(y_train, y_test,
+    classification_report_image(y_train_test,
                                 y_train_preds_lr, y_train_preds_rf,
                                 y_test_preds_lr, y_test_preds_rf)
 
