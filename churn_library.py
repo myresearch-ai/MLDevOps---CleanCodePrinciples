@@ -399,11 +399,10 @@ def train_models(
     # Compute ROC curve
     plt.figure(figsize=(15, 8))
     axis = plt.gca()
-    lrc_plot = plot_roc_curve(lrc, x_test, y_test, ax=axis, alpha=0.8)
-    rfc_disp = plot_roc_curve(cv_rfc.best_estimator_,
-                              x_test, y_test, ax=axis, alpha=0.8)
-    lrc_plot.plot(ax=axis, alpha=0.8)
-    rfc_disp.plot(ax=axis, alpha=0.8)
+    plot_roc_curve(lrc, x_test, y_test, ax=axis, alpha=0.8)
+    plot_roc_curve(cv_rfc.best_estimator_,
+                   x_test, y_test, ax=axis, alpha=0.8)
+
     plt.savefig(fname='./images/results/roc_curve_result.png')
     plt.close()
 
