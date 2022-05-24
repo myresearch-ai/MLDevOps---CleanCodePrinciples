@@ -65,26 +65,31 @@ def perform_eda(data: pd.DataFrame, figsize=(20, 10)) -> pd.DataFrame:
     plt.figure(figsize=figsize)
     data_eda['Churn'].hist()
     plt.savefig(fname='./images/eda/churn_distribution.png')
+    plt.close()
 
     # Customer Age Distribution
     plt.figure(figsize=figsize)
     data_eda['Customer_Age'].hist()
     plt.savefig(fname='./images/eda/customer_age_distribution.png')
+    plt.close()
 
     # Normalized Marital Status Distribution
     plt.figure(figsize=figsize)
     data_eda.Marital_Status.value_counts('normalize').plot(kind='bar')
     plt.savefig(fname='./images/eda/marital_status_distribution.png')
+    plt.close()
 
     # Total Transaction Distribution
     plt.figure(figsize=figsize)
     sns.histplot(data_eda, x='Total_Trans_Ct', stat='density', kde=True)
     plt.savefig(fname='./images/eda/total_transaction_distribution.png')
+    plt.close()
 
     # Correlation map
     plt.figure(figsize=figsize)
     sns.heatmap(data_eda.corr(), annot=False, cmap='Dark2_r', linewidths=2)
     plt.savefig(fname='./images/eda/corr.png')
+    plt.close()
 
     return data_eda
 
@@ -193,6 +198,94 @@ def perform_feature_engineering(data: pd.DataFrame,
 # Correction: put the dataframes in - List[pd.DataFrame] then index into list.
 
 
+# def classification_report_image(y_train_test: List[pd.DataFrame],
+#                                 y_train_preds_lr: List[float],
+#                                 y_train_preds_rf: List[float],
+#                                 y_test_preds_lr: List[float],
+#                                 y_test_preds_rf: List[float]):
+#     '''
+#     produces classification report for training and testing results and stores report as image
+#     in images folder
+#     input:
+#         y_train: training response values
+#         y_test:  test response values
+#         y_train_preds_lr: training predictions from logistic regression
+#         y_train_preds_rf: training predictions from random forest
+#         y_test_preds_lr: test predictions from logistic regression
+#         y_test_preds_rf: test predictions from random forest
+#     output:
+#         None
+#     '''
+#     # Extract y_train & y_test from y_train_test
+#     y_train = y_train_test[0]
+#     y_test = y_train_test[1]
+#     # RandomForestClassifier
+#     plt.rc('figure', figsize=(5, 5))
+#     plt.text(0.01, 1.25,
+#              str('Random Forest Train'),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.text(0.01, 0.05,
+#              str(classification_report(y_test, y_test_preds_rf)),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.axis('off')
+#     plt.savefig(fname='./images/results/rf_results_test.png')
+
+
+#     plt.rc('figure', figsize=(5, 5))
+#     plt.text(0.01, 0.6,
+#              str('Random Forest Test'),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.text(0.01, 0.7,
+#              str(classification_report(y_train, y_train_preds_rf)),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.axis('off')
+#     plt.savefig(fname='./images/results/rf_results_train.png')
+
+
+#     # LogisticRegression
+#     plt.rc('figure', figsize=(5, 5))
+#     plt.text(0.01, 1.25,
+#              str('Logistic Regression Train'),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.text(0.01, 0.05,
+#              str(classification_report(y_train, y_train_preds_lr)),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.axis('off')
+#     plt.savefig(fname='./images/results/logistic_results_train.png')
+
+
+#     plt.rc('figure', figsize=(5, 5))
+#     plt.text(0.01, 0.6,
+#              str('Logistic Regression Test'),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.text(0.01, 0.7,
+#              str(classification_report(y_test, y_test_preds_lr)),
+#              {'fontsize': 10}, fontproperties='monospace')
+#     plt.axis('off')
+#     plt.savefig(fname='./images/results/logistic_results_test.png')
+def plot_report(y_true, y_pred, plot_name):
+    '''
+    Utility function to plot and save classification report
+    images
+
+    input:
+        y_true: training response values
+        y_pred: predicted response values
+        plot_name: Name of plot
+    output:
+        None
+    '''
+    plt.rc('figure', figsize=(10, 10))
+    plt.text(0.01, 1.25, str(plot_name), {
+             'fontsize': 10}, fontproperties='monospace')
+    plt.text(0.01, 0.05, str(classification_report(y_true, y_pred)), {
+             'fontsize': 10}, fontproperties='monospace')  # approach improved by OP -> monospace!
+    plt.axis('off')
+    # plt.savefig(fname='./images/results/{}.png'.format(plot_name))
+    plt.savefig(fname=f'./images/results/{plot_name}.png')
+    plt.close()
+
+
 def classification_report_image(y_train_test: List[pd.DataFrame],
                                 y_train_preds_lr: List[float],
                                 y_train_preds_rf: List[float],
@@ -214,39 +307,12 @@ def classification_report_image(y_train_test: List[pd.DataFrame],
     # Extract y_train & y_test from y_train_test
     y_train = y_train_test[0]
     y_test = y_train_test[1]
-    # RandomForestClassifier
-    plt.rc('figure', figsize=(6, 6))
-    plt.text(0.01, 1.25,
-             str('Random Forest Train'),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.text(0.01, 0.05,
-             str(classification_report(y_test, y_test_preds_rf)),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.text(0.01, 0.6,
-             str('Random Forest Test'),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.text(0.01, 0.7,
-             str(classification_report(y_train, y_train_preds_rf)),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.axis('off')
-    plt.savefig(fname='./images/results/rf_results.png')
+    # Plot and save images
+    plot_report(y_test, y_test_preds_rf, 'RandomForestTest')
+    plot_report(y_train, y_train_preds_rf, 'RandomForestTrain')
 
-    # LogisticRegression
-    plt.rc('figure', figsize=(6, 6))
-    plt.text(0.01, 1.25,
-             str('Logistic Regression Train'),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.text(0.01, 0.05,
-             str(classification_report(y_train, y_train_preds_lr)),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.text(0.01, 0.6,
-             str('Logistic Regression Test'),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.text(0.01, 0.7,
-             str(classification_report(y_test, y_test_preds_lr)),
-             {'fontsize': 10}, fontproperties='monospace')
-    plt.axis('off')
-    plt.savefig(fname='./images/results/logistic_results.png')
+    plot_report(y_train, y_train_preds_lr, 'LogRegTrain')
+    plot_report(y_test, y_test_preds_lr, 'LogRegTest')
 
 
 def feature_importance_plot(model, x_data, output_pth):
@@ -283,6 +349,7 @@ def feature_importance_plot(model, x_data, output_pth):
 
     # Save the image
     plt.savefig(fname=output_pth + 'feature_importances.png')
+    plt.close()
 
 
 def train_models(
@@ -338,6 +405,7 @@ def train_models(
     lrc_plot.plot(ax=axis, alpha=0.8)
     rfc_disp.plot(ax=axis, alpha=0.8)
     plt.savefig(fname='./images/results/roc_curve_result.png')
+    plt.close()
 
     # Create y_train_test list
     y_train_test = [y_train, y_test]

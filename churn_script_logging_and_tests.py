@@ -259,34 +259,36 @@ def test_train_models():
     try:
         assert os.path.isfile('./images/results/roc_curve_result.png')
         logging.info(
-            'SUCCESS: The pickled model file %s was successfully found.',
+            'SUCCESS: The image file %s was successfully found.',
             'roc_curve_result.png')
     except AssertionError as err:
         logging.error(
-            'ERROR: The pickled model file was not found in designated directory.')
+            'ERROR: The image file was not found in designated directory.')
         raise err
 
-    # Assert if rfc_results.png file exists in designated directory
+    # Assert if RF images exists in designated directory
     try:
-        assert os.path.isfile('./images/results/rf_results.png')
+        assert os.path.isfile('./images/results/RandomForestTrain.png')
         logging.info(
-            'SUCCESS: The pickled model file %s was successfully found.',
-            'rf_results.png')
+            'SUCCESS: The image file %s was successfully found.',
+            'RandomForestTrain.png')
     except AssertionError as err:
         logging.error(
-            'ERROR: The pickled model file was not found in designated directory.')
+            'ERROR: The image file was not found in designated directory.')
         raise err
 
-    # Assert if logistic_results.png file exists in designated directory
+
+    # Assert if LR images exists in designated directory
     try:
-        assert os.path.isfile('./images/results/logistic_results.png')
+        assert os.path.isfile('./images/results/LogRegTrain.png')
         logging.info(
-            'SUCCESS: The pickled model file %s was successfully found.',
-            'logistic_results.png')
+            'SUCCESS: The image file %s was successfully found.',
+            'LogRegTrain.png')
     except AssertionError as err:
         logging.error(
-            'ERROR: The pickled model file was not found in designated directory.')
+            'ERROR: The image file was not found in designated directory.')
         raise err
+
 
     # Assert if feature_importances.png file exists in designated directory
     try:
